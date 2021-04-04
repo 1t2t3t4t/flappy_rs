@@ -32,6 +32,7 @@ impl Priority {
 
 trait GameComponent: EventHandler {
     fn priority(&self) -> Priority;
+    fn as_any(&self) -> &dyn Any;
 }
 
 #[derive(Default)]
@@ -48,8 +49,9 @@ impl GameState {
         self.components.insert(component_type_id, Box::new(new_component));
     }
 
-    fn find_type<T: 'static>(&'static self) -> Option<&T> {
-        None
+    fn find_type<T: 'static>(&self) -> Option<&T> {
+        self.components.get(&TypeId::of::<T>())
+            .and_then(|x| x.as_any().downcast_ref::<T>())
     }
 }
 

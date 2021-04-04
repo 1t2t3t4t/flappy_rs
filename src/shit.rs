@@ -3,6 +3,7 @@ use ggez::{Context, GameResult};
 use ggez::graphics::mint::Point2;
 use ggez::graphics::{MeshBuilder, DrawMode, Color};
 use crate::{EMPTY_DRAW_PARAM, GameComponent, Priority};
+use std::any::{Any, TypeId};
 
 #[derive(Debug)]
 pub struct Shit {
@@ -37,5 +38,9 @@ impl EventHandler for Shit {
 impl GameComponent for Shit {
     fn priority(&self) -> Priority {
         Priority::Mid
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }

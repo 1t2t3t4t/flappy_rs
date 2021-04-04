@@ -2,8 +2,9 @@ use ggez::event::EventHandler;
 use ggez::{Context, GameResult};
 use ggez::graphics::{Rect, MeshBuilder, DrawMode, Color};
 use crate::{EMPTY_DRAW_PARAM, GameComponent, Priority};
+use std::any::Any;
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Background;
 
 impl EventHandler for Background {
@@ -30,5 +31,9 @@ impl EventHandler for Background {
 impl GameComponent for Background {
     fn priority(&self) -> Priority {
         Priority::None
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }
