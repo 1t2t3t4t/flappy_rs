@@ -1,12 +1,10 @@
-use std::any::Any;
-
-use ggez::event::EventHandler;
-use ggez::graphics::mint::Point2;
-use ggez::graphics::{Color, DrawMode, MeshBuilder};
 use ggez::{Context, GameResult};
+use ggez::event::EventHandler;
+use ggez::graphics::{Color, DrawMode, MeshBuilder};
+use ggez::graphics::mint::Point2;
 
 use crate::constant::EMPTY_DRAW_PARAM;
-use crate::{GameComponent, Priority};
+use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]
 pub struct Shit {

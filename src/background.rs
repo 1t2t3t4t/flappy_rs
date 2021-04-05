@@ -1,11 +1,9 @@
-use std::any::Any;
-
 use ggez::event::EventHandler;
 use ggez::graphics::{DrawMode, MeshBuilder, Rect};
 use ggez::{Context, GameResult};
 
 use crate::constant::{color, EMPTY_DRAW_PARAM};
-use crate::{GameComponent, Priority};
+use crate::game_state::{GameComponent, Priority};
 
 #[derive(Default, Debug)]
 pub struct Background;
