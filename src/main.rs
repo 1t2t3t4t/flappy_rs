@@ -11,8 +11,8 @@ mod background;
 mod constant;
 mod shit;
 
+#[derive(Eq, PartialEq)]
 enum Priority {
-    None,
     Low,
     Mid,
     High,
@@ -21,7 +21,6 @@ enum Priority {
 impl Priority {
     fn val(&self) -> u8 {
         match self {
-            Priority::None => 0,
             Priority::Low => 64,
             Priority::Mid => 128,
             Priority::High => 255,
@@ -63,6 +62,13 @@ impl GameState {
             .insert(component_type_id, Box::new(new_component));
     }
 
+    fn draw_by_priority(&mut self, _ctx: &mut Context, priority: Priority) -> GameResult {
+        self.components.values_mut()
+            .filter(|x| x.priority() == priority)
+            .try_for_each(|x| x.draw(_ctx))?;
+        Ok(())
+    }
+
     fn find_component<T: 'static>(&self) -> Option<&T> {
         self.components
             .get(&TypeId::of::<T>())
@@ -86,9 +92,9 @@ impl EventHandler for GameState {
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
         ggez::graphics::clear(_ctx, ggez::graphics::BLACK);
-        for component in self.components.values_mut() {
-            component.draw(_ctx)?
-        }
+        self.draw_by_priority(_ctx, Priority::Low)?;
+        self.draw_by_priority(_ctx, Priority::Mid)?;
+        self.draw_by_priority(_ctx, Priority::High)?;
         ggez::graphics::present(_ctx)
     }
 }
