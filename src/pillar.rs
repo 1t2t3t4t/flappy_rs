@@ -42,6 +42,10 @@ impl Pillar {
     pub fn is_out_of_screen(&self) -> bool {
         self.upper_rect.x + PILLAR_WIDTH < 0f32
     }
+
+    pub fn pos_x(&self) -> f32 {
+        self.upper_rect.x
+    }
 }
 
 impl EventHandler for Pillar {

@@ -6,12 +6,16 @@ use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
 use crate::pillar::Pillar;
 use crate::shit::Shit;
+use crate::pillar_container::PillarContainer;
+use std::rc::Rc;
+use std::borrow::BorrowMut;
 
 mod background;
 mod constant;
 mod game_state;
 mod pillar;
 mod shit;
+mod pillar_container;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;
@@ -38,7 +42,7 @@ fn main() {
     let mut game_state = GameState::default();
     game_state.add_component(Background);
     game_state.add_component(Shit::default());
-    game_state.add_component(Pillar::new(w, h));
+    game_state.add_component(PillarContainer::default());
 
     ggez::event::run(&mut ctx, &mut event_loop, &mut game_state).unwrap();
 }
