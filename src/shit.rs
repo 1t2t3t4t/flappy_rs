@@ -16,6 +16,10 @@ pub struct Shit {
 }
 
 impl Shit {
+    pub fn killed(&self) -> bool {
+        !self.is_alive
+    }
+
     pub fn kill(&mut self) {
         self.is_alive = false;
     }

@@ -24,6 +24,12 @@ impl PillarContainer {
         self.pillars.push(Pillar::new(w, h));
     }
 
+    pub fn stop_all(&mut self) {
+        self.pillars
+            .iter_mut()
+            .for_each(|x| x.stop());
+    }
+
     fn update_pillars(&mut self, ctx: &mut Context) {
         let (w, _) = ggez::graphics::drawable_size(ctx);
         if self.pillars().len() < 10 {

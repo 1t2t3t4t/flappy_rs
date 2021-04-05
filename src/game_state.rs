@@ -39,15 +39,31 @@ impl GameState {
             .try_for_each(|x| x.draw(_ctx))
     }
 
-    fn check_score(&mut self) {
+    fn check_shit(&mut self) {
         let shit_rect = self.find_component::<Shit>().expect("Shit").rect;
         let container = self.find_component_mut::<PillarContainer>().expect("Container");
+        let mut should_die = false;
+
         for pillar in container.pillars_mut() {
-            if  shit_rect.x > pillar.pos_x() + PILLAR_WIDTH && !pillar.passed {
+            if pillar.collide(shit_rect) {
+                should_die = true;
+            } else if  shit_rect.x > pillar.pos_x() + PILLAR_WIDTH && !pillar.passed {
                 pillar.passed = true;
                 self.score += 1;
                 return;
             }
+        }
+
+        if should_die {
+            let shit = self.find_component_mut::<Shit>().expect("Shit");
+            shit.kill();
+        }
+
+        let killed = self.find_component::<Shit>().expect("Shit").killed();
+        let container = self.find_component_mut::<PillarContainer>().expect("Container");
+
+        if killed {
+            container.stop_all();
         }
     }
 }
@@ -58,8 +74,7 @@ impl GameComponentContainer for GameState {
         if self.components.contains_key(&component_type_id) {
             return;
         }
-        self.components
-            .insert(component_type_id, Box::new(new_component));
+        self.components.insert(component_type_id, Box::new(new_component));
     }
 
     fn find_component<T: 'static>(&self) -> Option<&T> {
@@ -80,7 +95,7 @@ impl EventHandler for GameState {
         for component in self.components.values_mut() {
             component.update(_ctx)?
         }
-        self.check_score();
+        self.check_shit();
         Ok(())
     }
 

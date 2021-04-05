@@ -49,6 +49,14 @@ impl Pillar {
     pub fn pos_x(&self) -> f32 {
         self.upper_rect.x
     }
+
+    pub fn collide(&self, rect: Rect) -> bool {
+        self.upper_rect.overlaps(&rect) || self.lower_rect.overlaps(&rect)
+    }
+
+    pub fn stop(&mut self) {
+        self.velocity = [0f32, 0f32].into();
+    }
 }
 
 impl EventHandler for Pillar {
