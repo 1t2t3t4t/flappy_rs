@@ -5,13 +5,15 @@ use ggez::{ContextBuilder, GameResult};
 use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
 use crate::shit::Shit;
+use crate::pillar::Pillar;
 
 mod background;
 mod constant;
 mod shit;
 mod game_state;
+mod pillar;
 
-trait AsAny {
+pub trait AsAny {
     fn as_any(&self) -> &dyn Any;
     fn as_any_mut(&mut self) -> &mut dyn Any;
 }
@@ -31,9 +33,12 @@ fn main() {
         .build()
         .expect("Buildable");
 
+    let (w, h) = ggez::graphics::drawable_size(&ctx);
+
     let mut game_state = GameState::default();
     game_state.add_component(Background);
     game_state.add_component(Shit::default());
+    game_state.add_component(Pillar::new(w, h));
 
     ggez::event::run(&mut ctx, &mut event_loop, &mut game_state).unwrap();
 }

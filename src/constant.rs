@@ -8,4 +8,10 @@ pub mod color {
 
 pub mod world {
     pub const GRAVITY: f32 = 9.8;
+
+    pub const JUMP_FORCE: f32 = -250f32;
+    pub const BIRD_SIZE: f32 = 60f32;
+
+    pub const PILLAR_WIDTH: f32 = 100f32;
+    pub const PILLAR_SPEED: f32 = 150f32;
 }

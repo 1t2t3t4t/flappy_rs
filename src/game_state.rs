@@ -11,16 +11,6 @@ pub enum Priority {
     High,
 }
 
-impl Priority {
-    fn val(&self) -> u8 {
-        match self {
-            Priority::Low => 64,
-            Priority::Mid => 128,
-            Priority::High => 255,
-        }
-    }
-}
-
 pub trait GameComponent: EventHandler + AsAny {
     fn priority(&self) -> Priority;
 }
@@ -78,9 +68,11 @@ impl EventHandler for GameState {
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
         ggez::graphics::clear(_ctx, ggez::graphics::BLACK);
+
         self.draw_by_priority(_ctx, Priority::Low)?;
         self.draw_by_priority(_ctx, Priority::Mid)?;
         self.draw_by_priority(_ctx, Priority::High)?;
+         
         ggez::graphics::present(_ctx)
     }
 }
