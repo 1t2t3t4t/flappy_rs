@@ -47,10 +47,11 @@ impl GameState {
         for pillar in container.pillars_mut() {
             if pillar.collide(shit_rect) {
                 should_die = true;
+                break;
             } else if  shit_rect.x > pillar.pos_x() + PILLAR_WIDTH && !pillar.passed {
                 pillar.passed = true;
                 self.score += 1;
-                return;
+                break;
             }
         }
 
