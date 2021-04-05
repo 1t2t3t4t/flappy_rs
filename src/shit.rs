@@ -12,7 +12,7 @@ use ggez::input::keyboard::KeyCode;
 pub struct Shit {
     rect: Rect,
     velocity: Point2<f32>,
-    is_alive: bool
+    is_alive: bool,
 }
 
 impl Shit {
@@ -30,7 +30,7 @@ impl Default for Shit {
         Self {
             rect: Rect::new(100f32, 200f32, BIRD_SIZE, BIRD_SIZE),
             velocity: Point2 { x: 0f32, y: 0f32 },
-            is_alive: true
+            is_alive: true,
         }
     }
 }
