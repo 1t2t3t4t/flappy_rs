@@ -1,24 +1,24 @@
-use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
-use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
 use ggez::graphics::mint::Point2;
+use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
+use ggez::{Context, GameResult};
 
-use crate::constant::{EMPTY_DRAW_PARAM, world::GRAVITY};
+use crate::constant::world::{BIRD_SIZE, JUMP_FORCE};
+use crate::constant::{world::GRAVITY, EMPTY_DRAW_PARAM};
 use crate::game_state::{GameComponent, Priority};
 use ggez::input::keyboard::KeyCode;
-use crate::constant::world::{JUMP_FORCE, BIRD_SIZE};
 
 #[derive(Debug)]
 pub struct Shit {
     rect: Rect,
-    velocity: Point2<f32>
+    velocity: Point2<f32>,
 }
 
 impl Default for Shit {
     fn default() -> Self {
         Self {
             rect: Rect::new(100f32, 200f32, BIRD_SIZE, BIRD_SIZE),
-            velocity: Point2 { x: 0f32, y: 0f32 }
+            velocity: Point2 { x: 0f32, y: 0f32 },
         }
     }
 }
@@ -41,11 +41,7 @@ impl EventHandler for Shit {
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
         let cir = MeshBuilder::new()
-            .rectangle(
-                DrawMode::fill(),
-                self.rect,
-                Color::new(0.5, 0.5, 0.5, 1.0)
-            )
+            .rectangle(DrawMode::fill(), self.rect, Color::new(0.5, 0.5, 0.5, 1.0))
             .build(_ctx)?;
         ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)
     }

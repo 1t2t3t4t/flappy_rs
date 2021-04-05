@@ -4,14 +4,14 @@ use ggez::{ContextBuilder, GameResult};
 
 use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
-use crate::shit::Shit;
 use crate::pillar::Pillar;
+use crate::shit::Shit;
 
 mod background;
 mod constant;
-mod shit;
 mod game_state;
 mod pillar;
+mod shit;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;

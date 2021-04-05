@@ -1,20 +1,16 @@
-use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
 use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
 use ggez::nalgebra::Point2;
-use rand::{Rng, thread_rng};
+use ggez::{Context, GameResult};
+use rand::{thread_rng, Rng};
 
-use crate::constant::EMPTY_DRAW_PARAM;
 use crate::constant::world::{BIRD_SIZE, PILLAR_SPEED, PILLAR_WIDTH};
+use crate::constant::EMPTY_DRAW_PARAM;
 use crate::game_state::{GameComponent, Priority};
 
 fn draw_pillar_rect(_ctx: &mut Context, rect: Rect) -> GameResult {
     let pillar = MeshBuilder::new()
-        .rectangle(
-            DrawMode::fill(),
-            rect,
-            Color::new(0.5, 0.5, 0.5, 1.0)
-        )
+        .rectangle(DrawMode::fill(), rect, Color::new(0.5, 0.5, 0.5, 1.0))
         .build(_ctx)?;
     ggez::graphics::draw(_ctx, &pillar, EMPTY_DRAW_PARAM)
 }
@@ -22,7 +18,7 @@ fn draw_pillar_rect(_ctx: &mut Context, rect: Rect) -> GameResult {
 pub struct Pillar {
     upper_rect: Rect,
     lower_rect: Rect,
-    velocity: Point2<f32>
+    velocity: Point2<f32>,
 }
 
 impl Pillar {
@@ -33,9 +29,18 @@ impl Pillar {
 
         Pillar {
             upper_rect: Rect::new(x_pos, 0f32, PILLAR_WIDTH, rand_hole_pos),
-            lower_rect: Rect::new(x_pos, lower_pillar_y, PILLAR_WIDTH, screen_height - lower_pillar_y),
-            velocity: [PILLAR_SPEED, 0f32].into()
+            lower_rect: Rect::new(
+                x_pos,
+                lower_pillar_y,
+                PILLAR_WIDTH,
+                screen_height - lower_pillar_y,
+            ),
+            velocity: [PILLAR_SPEED, 0f32].into(),
         }
+    }
+
+    pub fn is_out_of_screen(&self) -> bool {
+        self.upper_rect.x + PILLAR_WIDTH < 0f32
     }
 }
 

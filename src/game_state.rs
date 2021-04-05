@@ -1,8 +1,8 @@
-use ggez::event::EventHandler;
 use crate::AsAny;
-use std::any::{TypeId, Any};
-use std::collections::HashMap;
+use ggez::event::EventHandler;
 use ggez::{Context, GameResult};
+use std::any::{Any, TypeId};
+use std::collections::HashMap;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -29,7 +29,8 @@ pub struct GameState {
 
 impl GameState {
     fn draw_by_priority(&mut self, _ctx: &mut Context, priority: Priority) -> GameResult {
-        self.components.values_mut()
+        self.components
+            .values_mut()
             .filter(|x| x.priority() == priority)
             .try_for_each(|x| x.draw(_ctx))
     }
@@ -72,7 +73,7 @@ impl EventHandler for GameState {
         self.draw_by_priority(_ctx, Priority::Low)?;
         self.draw_by_priority(_ctx, Priority::Mid)?;
         self.draw_by_priority(_ctx, Priority::High)?;
-         
+
         ggez::graphics::present(_ctx)
     }
 }
