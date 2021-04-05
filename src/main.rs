@@ -1,22 +1,21 @@
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 
-use ggez::{Context, ContextBuilder, GameResult};
 use ggez::event::EventHandler;
+use ggez::{Context, ContextBuilder, GameResult};
 
 use crate::background::Background;
 use crate::shit::Shit;
 
 mod background;
+mod constant;
 mod shit;
-
-pub const EMPTY_DRAW_PARAM: ([f32; 2], ) = ([0f32, 0f32], );
 
 enum Priority {
     None,
     Low,
     Mid,
-    High
+    High,
 }
 
 impl Priority {
@@ -25,19 +24,33 @@ impl Priority {
             Priority::None => 0,
             Priority::Low => 64,
             Priority::Mid => 128,
-            Priority::High => 255
+            Priority::High => 255,
         }
     }
 }
 
-trait GameComponent: EventHandler {
-    fn priority(&self) -> Priority;
+trait AsAny {
     fn as_any(&self) -> &dyn Any;
+    fn as_any_mut(&mut self) -> &mut dyn Any;
+}
+
+impl<T: Any> AsAny for T {
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
+    }
+}
+
+trait GameComponent: EventHandler + AsAny {
+    fn priority(&self) -> Priority;
 }
 
 #[derive(Default)]
 struct GameState {
-    components: HashMap<TypeId, Box<dyn GameComponent>>
+    components: HashMap<TypeId, Box<dyn GameComponent>>,
 }
 
 impl GameState {
@@ -46,12 +59,20 @@ impl GameState {
         if self.components.contains_key(&component_type_id) {
             return;
         }
-        self.components.insert(component_type_id, Box::new(new_component));
+        self.components
+            .insert(component_type_id, Box::new(new_component));
     }
 
-    fn find_type<T: 'static>(&self) -> Option<&T> {
-        self.components.get(&TypeId::of::<T>())
-            .and_then(|x| x.as_any().downcast_ref::<T>())
+    fn find_component<T: 'static>(&self) -> Option<&T> {
+        self.components
+            .get(&TypeId::of::<T>())
+            .and_then(|x| (**x).as_any().downcast_ref::<T>())
+    }
+
+    fn find_component_mut<T: 'static>(&mut self) -> Option<&mut T> {
+        self.components
+            .get_mut(&TypeId::of::<T>())
+            .and_then(|x| (**x).as_any_mut().downcast_mut::<T>())
     }
 }
 
