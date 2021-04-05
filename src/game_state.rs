@@ -36,21 +36,6 @@ impl GameState {
             .filter(|x| x.priority() == priority)
             .try_for_each(|x| x.draw(_ctx))
     }
-
-    fn update_pillars(&mut self, ctx: &mut Context) {
-        let (w, _) = ggez::graphics::drawable_size(ctx);
-        if let Some(pillar_container) = self.find_component_mut::<PillarContainer>() {
-            if pillar_container.pillars().len() < 10 {
-                if let Some(latest) = pillar_container.pillars().last() {
-                    if w - latest.pos_x() >= BIRD_SIZE * 5f32 {
-                        pillar_container.gen_pillar(ctx);
-                    }
-                } else {
-                    pillar_container.gen_pillar(ctx);
-                }
-            }
-        }
-    }
 }
 
 impl GameComponentContainer for GameState {
@@ -78,7 +63,6 @@ impl GameComponentContainer for GameState {
 
 impl EventHandler for GameState {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
-        self.update_pillars(_ctx);
         for component in self.components.values_mut() {
             component.update(_ctx)?
         }

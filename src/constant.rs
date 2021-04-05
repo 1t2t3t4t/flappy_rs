@@ -13,5 +13,5 @@ pub mod world {
     pub const BIRD_SIZE: f32 = 60f32;
 
     pub const PILLAR_WIDTH: f32 = 100f32;
-    pub const PILLAR_SPEED: f32 = 150f32;
+    pub const PILLAR_SPEED: f32 = 200f32;
 }

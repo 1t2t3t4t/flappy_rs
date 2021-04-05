@@ -1,14 +1,11 @@
 use std::any::Any;
 
-use ggez::{ContextBuilder, GameResult};
+use ggez::ContextBuilder;
 
 use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
-use crate::pillar::Pillar;
-use crate::shit::Shit;
 use crate::pillar_container::PillarContainer;
-use std::rc::Rc;
-use std::borrow::BorrowMut;
+use crate::shit::Shit;
 
 mod background;
 mod constant;
@@ -36,8 +33,6 @@ fn main() {
     let (mut ctx, mut event_loop) = ContextBuilder::new("flappy_shit", "Boss")
         .build()
         .expect("Buildable");
-
-    let (w, h) = ggez::graphics::drawable_size(&ctx);
 
     let mut game_state = GameState::default();
     game_state.add_component(Background);
