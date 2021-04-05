@@ -15,6 +15,10 @@ impl PillarContainer {
         &self.pillars
     }
 
+    pub fn pillars_mut(&mut self) -> &mut Vec<Pillar> {
+        &mut self.pillars
+    }
+
     pub fn gen_pillar(&mut self, ctx: &mut Context) {
         let (w, h) = ggez::graphics::drawable_size(ctx);
         self.pillars.push(Pillar::new(w, h));

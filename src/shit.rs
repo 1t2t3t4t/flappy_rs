@@ -10,7 +10,7 @@ use ggez::input::keyboard::KeyCode;
 
 #[derive(Debug)]
 pub struct Shit {
-    rect: Rect,
+    pub rect: Rect,
     velocity: Point2<f32>,
     is_alive: bool,
 }

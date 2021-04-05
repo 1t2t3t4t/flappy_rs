@@ -4,7 +4,8 @@ use ggez::{Context, GameResult};
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use crate::pillar_container::PillarContainer;
-use crate::constant::world::BIRD_SIZE;
+use crate::constant::world::{BIRD_SIZE, PILLAR_WIDTH};
+use crate::shit::Shit;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -27,6 +28,7 @@ pub trait GameComponentContainer {
 #[derive(Default)]
 pub struct GameState {
     components: HashMap<TypeId, Box<dyn GameComponent>>,
+    score: u32
 }
 
 impl GameState {
@@ -35,6 +37,18 @@ impl GameState {
             .values_mut()
             .filter(|x| x.priority() == priority)
             .try_for_each(|x| x.draw(_ctx))
+    }
+
+    fn check_score(&mut self) {
+        let shit_rect = self.find_component::<Shit>().expect("Shit").rect;
+        let container = self.find_component_mut::<PillarContainer>().expect("Container");
+        for pillar in container.pillars_mut() {
+            if  shit_rect.x > pillar.pos_x() + PILLAR_WIDTH && !pillar.passed {
+                pillar.passed = true;
+                self.score += 1;
+                return;
+            }
+        }
     }
 }
 
@@ -66,6 +80,7 @@ impl EventHandler for GameState {
         for component in self.components.values_mut() {
             component.update(_ctx)?
         }
+        self.check_score();
         Ok(())
     }
 

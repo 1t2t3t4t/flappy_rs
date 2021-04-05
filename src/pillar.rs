@@ -20,6 +20,7 @@ pub struct Pillar {
     upper_rect: Rect,
     lower_rect: Rect,
     velocity: Point2<f32>,
+    pub passed: bool
 }
 
 impl Pillar {
@@ -37,6 +38,7 @@ impl Pillar {
                 screen_height - lower_pillar_y,
             ),
             velocity: [PILLAR_SPEED, 0f32].into(),
+            passed: false
         }
     }
 
