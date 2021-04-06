@@ -4,12 +4,12 @@ use std::collections::HashMap;
 use ggez::event::EventHandler;
 use ggez::{Context, GameResult};
 
+use crate::background::Background;
 use crate::constant::world::PILLAR_WIDTH;
+use crate::ferris::Ferris;
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
-use crate::ferris::Ferris;
 use crate::AsAny;
-use crate::background::Background;
 use ggez::input::keyboard::KeyCode;
 
 #[derive(Eq, PartialEq)]

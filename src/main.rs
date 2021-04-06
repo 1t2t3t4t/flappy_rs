@@ -2,21 +2,18 @@ use std::any::Any;
 
 use ggez::ContextBuilder;
 
-use crate::background::Background;
-use crate::game_state::{GameComponentContainer, GameState};
-use crate::pillar_container::PillarContainer;
-use crate::score_board::ScoreBoard;
-use crate::ferris::Ferris;
+use crate::game_state::GameState;
+
 use std::env;
 use std::path;
 
 mod background;
 mod constant;
+mod ferris;
 mod game_state;
 mod pillar;
 mod pillar_container;
 mod score_board;
-mod ferris;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;
