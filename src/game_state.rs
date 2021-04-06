@@ -9,6 +9,8 @@ use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
 use crate::ferris::Ferris;
 use crate::AsAny;
+use crate::background::Background;
+use ggez::input::keyboard::KeyCode;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -36,6 +38,19 @@ pub struct GameState {
 }
 
 impl GameState {
+    pub fn set_up(&mut self, ctx: &mut Context) {
+        self.add_component(Background);
+        self.add_component(Ferris::new(ctx));
+        self.add_component(PillarContainer::default());
+        self.add_component(ScoreBoard::default());
+    }
+
+    fn restart_game(&mut self, ctx: &mut Context) {
+        self.score = 0;
+        self.components.clear();
+        self.set_up(ctx);
+    }
+
     fn draw_by_priority(&mut self, _ctx: &mut Context, priority: Priority) -> GameResult {
         self.components
             .values_mut()
@@ -117,6 +132,12 @@ impl EventHandler for GameState {
         self.check_shit();
         self.check_game_status();
         self.update_score_board();
+
+        let is_ferris_dead = self.find_component::<Ferris>().expect("Ferris").killed();
+        let pressed_enter = ggez::input::keyboard::is_key_pressed(_ctx, KeyCode::Return);
+        if is_ferris_dead && pressed_enter {
+            self.restart_game(_ctx);
+        }
 
         Ok(())
     }

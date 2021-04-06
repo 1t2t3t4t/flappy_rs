@@ -48,10 +48,7 @@ fn main() {
         .expect("Buildable");
 
     let mut game_state = GameState::default();
-    game_state.add_component(Background);
-    game_state.add_component(Ferris::new(&mut ctx));
-    game_state.add_component(PillarContainer::default());
-    game_state.add_component(ScoreBoard::default());
+    game_state.set_up(&mut ctx);
 
     ggez::event::run(&mut ctx, &mut event_loop, &mut game_state).unwrap();
 }
