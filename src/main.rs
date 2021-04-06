@@ -6,12 +6,14 @@ use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
 use crate::pillar_container::PillarContainer;
 use crate::shit::Shit;
+use crate::score_board::ScoreBoard;
 
 mod background;
 mod constant;
 mod game_state;
 mod pillar;
 mod pillar_container;
+mod score_board;
 mod shit;
 
 pub trait AsAny {
@@ -38,6 +40,7 @@ fn main() {
     game_state.add_component(Background);
     game_state.add_component(Shit::default());
     game_state.add_component(PillarContainer::default());
+    game_state.add_component(ScoreBoard::default());
 
     ggez::event::run(&mut ctx, &mut event_loop, &mut game_state).unwrap();
 }

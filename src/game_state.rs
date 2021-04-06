@@ -8,6 +8,7 @@ use crate::AsAny;
 use crate::constant::world::PILLAR_WIDTH;
 use crate::pillar_container::PillarContainer;
 use crate::shit::Shit;
+use crate::score_board::ScoreBoard;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -63,6 +64,10 @@ impl GameState {
             let shit = self.find_component_mut::<Shit>().expect("Shit");
             shit.kill();
         }
+
+        let score = self.score;
+        let score_board = self.find_component_mut::<ScoreBoard>().expect("Scoreboard");
+        score_board.score = score;
     }
 
     fn check_game_status(&mut self) {
