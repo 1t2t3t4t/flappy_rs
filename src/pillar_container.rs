@@ -1,7 +1,7 @@
 use ggez::event::EventHandler;
 use ggez::{Context, GameResult};
 
-use crate::constant::world::{BIRD_SIZE, PILLAR_SPEED};
+use crate::constant::world::{BIRD_HEIGHT, PILLAR_SPEED};
 use crate::game_state::{GameComponent, Priority};
 use crate::pillar::Pillar;
 
@@ -32,7 +32,7 @@ impl PillarContainer {
         let (w, _) = ggez::graphics::drawable_size(ctx);
         if self.pillars().len() < 10 {
             if let Some(latest) = self.pillars().last() {
-                let least_pillar_distance = BIRD_SIZE * 6f32;
+                let least_pillar_distance = BIRD_HEIGHT * 6f32;
                 if w - latest.pos_x() >= least_pillar_distance {
                     self.gen_pillar(ctx);
                 }
@@ -66,6 +66,6 @@ impl EventHandler for PillarContainer {
 
 impl GameComponent for PillarContainer {
     fn priority(&self) -> Priority {
-        Priority::Mid
+        Priority::Low
     }
 }

@@ -29,6 +29,6 @@ impl EventHandler for Background {
 
 impl GameComponent for Background {
     fn priority(&self) -> Priority {
-        Priority::Low
+        Priority::None
     }
 }

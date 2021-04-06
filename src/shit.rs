@@ -1,10 +1,10 @@
 use ggez::event::EventHandler;
 use ggez::graphics::mint::Point2;
-use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect, Image, DrawParam};
+use ggez::graphics::{Color, DrawMode, DrawParam, Image, MeshBuilder, Rect};
 use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
 
-use crate::constant::world::{BIRD_SIZE, JUMP_FORCE};
+use crate::constant::world::{BIRD_HEIGHT, BIRD_WIDTH, JUMP_FORCE};
 use crate::constant::{world::GRAVITY, EMPTY_DRAW_PARAM};
 use crate::game_state::{GameComponent, Priority};
 
@@ -20,7 +20,7 @@ impl Shit {
     pub fn new(ctx: &mut Context) -> Self {
         Self {
             img: Image::new(ctx, "/cuddlyferris.png").expect("Missing ferris img"),
-            rect: Rect::new(100f32, 200f32, BIRD_SIZE, BIRD_SIZE),
+            rect: Rect::new(100f32, 200f32, BIRD_WIDTH, BIRD_HEIGHT),
             velocity: Point2 { x: 0f32, y: 0f32 },
             is_alive: true,
         }
@@ -66,11 +66,12 @@ impl EventHandler for Shit {
         let cir = MeshBuilder::new()
             .rectangle(DrawMode::fill(), self.rect, Color::new(0.5, 0.5, 0.5, 1.0))
             .build(_ctx)?;
-        ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)?;
+        // ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)?;
 
         let draw_param = DrawParam::new()
             .dest([self.rect.x, self.rect.y])
-            .scale([0.06, 0.06]);
+            .offset([0.02, 0.02])
+            .scale([0.07, 0.07]);
         ggez::graphics::draw(_ctx, &self.img, draw_param)
     }
 }

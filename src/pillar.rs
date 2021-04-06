@@ -4,7 +4,7 @@ use ggez::nalgebra::Point2;
 use ggez::{Context, GameResult};
 use rand::{thread_rng, Rng};
 
-use crate::constant::world::{BIRD_SIZE, PILLAR_SPEED, PILLAR_WIDTH};
+use crate::constant::world::{BIRD_HEIGHT, PILLAR_WIDTH};
 use crate::constant::EMPTY_DRAW_PARAM;
 use crate::game_state::{GameComponent, Priority};
 
@@ -25,7 +25,7 @@ pub struct Pillar {
 
 impl Pillar {
     pub fn new(x_pos: f32, screen_height: f32, velocity: f32) -> Pillar {
-        let pillar_hole = BIRD_SIZE * 2.5f32;
+        let pillar_hole = BIRD_HEIGHT * 2.5f32;
         let rand_hole_pos = thread_rng().gen_range(0f32..=(screen_height - pillar_hole));
         let lower_pillar_y = rand_hole_pos + pillar_hole;
 
@@ -75,6 +75,6 @@ impl EventHandler for Pillar {
 
 impl GameComponent for Pillar {
     fn priority(&self) -> Priority {
-        Priority::Mid
+        Priority::Low
     }
 }

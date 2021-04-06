@@ -12,6 +12,7 @@ use crate::AsAny;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
+    None,
     Low,
     Mid,
     High,
@@ -123,6 +124,7 @@ impl EventHandler for GameState {
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
         ggez::graphics::clear(_ctx, ggez::graphics::BLACK);
 
+        self.draw_by_priority(_ctx, Priority::None)?;
         self.draw_by_priority(_ctx, Priority::Low)?;
         self.draw_by_priority(_ctx, Priority::Mid)?;
         self.draw_by_priority(_ctx, Priority::High)?;
