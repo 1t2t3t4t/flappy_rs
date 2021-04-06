@@ -7,7 +7,7 @@ use ggez::{Context, GameResult};
 use crate::constant::world::PILLAR_WIDTH;
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
-use crate::shit::Shit;
+use crate::ferris::Ferris;
 use crate::AsAny;
 
 #[derive(Eq, PartialEq)]
@@ -44,7 +44,7 @@ impl GameState {
     }
 
     fn check_shit(&mut self) {
-        let shit_rect = self.find_component::<Shit>().expect("Shit").rect;
+        let shit_rect = self.find_component::<Ferris>().expect("Shit").rect;
         let container = self
             .find_component_mut::<PillarContainer>()
             .expect("Container");
@@ -62,7 +62,7 @@ impl GameState {
         }
 
         if should_die {
-            let shit = self.find_component_mut::<Shit>().expect("Shit");
+            let shit = self.find_component_mut::<Ferris>().expect("Shit");
             shit.kill();
         }
     }
@@ -74,7 +74,7 @@ impl GameState {
     }
 
     fn check_game_status(&mut self) {
-        let killed = self.find_component::<Shit>().expect("Shit").killed();
+        let killed = self.find_component::<Ferris>().expect("Shit").killed();
         let container = self
             .find_component_mut::<PillarContainer>()
             .expect("Container");

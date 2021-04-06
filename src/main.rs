@@ -6,7 +6,7 @@ use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
-use crate::shit::Shit;
+use crate::ferris::Ferris;
 use std::env;
 use std::path;
 
@@ -16,7 +16,7 @@ mod game_state;
 mod pillar;
 mod pillar_container;
 mod score_board;
-mod shit;
+mod ferris;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;
@@ -49,7 +49,7 @@ fn main() {
 
     let mut game_state = GameState::default();
     game_state.add_component(Background);
-    game_state.add_component(Shit::new(&mut ctx));
+    game_state.add_component(Ferris::new(&mut ctx));
     game_state.add_component(PillarContainer::default());
     game_state.add_component(ScoreBoard::default());
 

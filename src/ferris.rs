@@ -9,14 +9,14 @@ use crate::constant::{world::GRAVITY, EMPTY_DRAW_PARAM};
 use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]
-pub struct Shit {
+pub struct Ferris {
     img: Image,
     pub rect: Rect,
     velocity: Point2<f32>,
     is_alive: bool,
 }
 
-impl Shit {
+impl Ferris {
     pub fn new(ctx: &mut Context) -> Self {
         Self {
             img: Image::new(ctx, "/cuddlyferris.png").expect("Missing ferris img"),
@@ -39,7 +39,7 @@ impl Shit {
     }
 }
 
-impl EventHandler for Shit {
+impl EventHandler for Ferris {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         let delta = ggez::timer::delta(_ctx).as_secs_f32();
         let (_, h) = ggez::graphics::drawable_size(_ctx);
@@ -66,7 +66,7 @@ impl EventHandler for Shit {
         let cir = MeshBuilder::new()
             .rectangle(DrawMode::fill(), self.rect, Color::new(0.5, 0.5, 0.5, 1.0))
             .build(_ctx)?;
-        // ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)?;
+        ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)?;
 
         let draw_param = DrawParam::new()
             .dest([self.rect.x, self.rect.y])
@@ -76,7 +76,7 @@ impl EventHandler for Shit {
     }
 }
 
-impl GameComponent for Shit {
+impl GameComponent for Ferris {
     fn priority(&self) -> Priority {
         Priority::Mid
     }
