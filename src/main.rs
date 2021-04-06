@@ -7,6 +7,8 @@ use crate::game_state::{GameComponentContainer, GameState};
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
 use crate::shit::Shit;
+use std::env;
+use std::path;
 
 mod background;
 mod constant;
@@ -32,13 +34,22 @@ impl<T: Any> AsAny for T {
 }
 
 fn main() {
+    let resource_dir = if let Ok(manifest_dir) = env::var("CARGO_MANIFEST_DIR") {
+        let mut path = path::PathBuf::from(manifest_dir);
+        path.push("resources");
+        path
+    } else {
+        path::PathBuf::from("./resources")
+    };
+
     let (mut ctx, mut event_loop) = ContextBuilder::new("flappy_shit", "Boss")
+        .add_resource_path(resource_dir)
         .build()
         .expect("Buildable");
 
     let mut game_state = GameState::default();
     game_state.add_component(Background);
-    game_state.add_component(Shit::default());
+    game_state.add_component(Shit::new(&mut ctx));
     game_state.add_component(PillarContainer::default());
     game_state.add_component(ScoreBoard::default());
 

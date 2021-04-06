@@ -1,6 +1,6 @@
 use ggez::event::EventHandler;
 use ggez::graphics::mint::Point2;
-use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
+use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect, Image, DrawParam};
 use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
 
@@ -10,12 +10,22 @@ use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]
 pub struct Shit {
+    img: Image,
     pub rect: Rect,
     velocity: Point2<f32>,
     is_alive: bool,
 }
 
 impl Shit {
+    pub fn new(ctx: &mut Context) -> Self {
+        Self {
+            img: Image::new(ctx, "/cuddlyferris.png").expect("Missing ferris img"),
+            rect: Rect::new(100f32, 200f32, BIRD_SIZE, BIRD_SIZE),
+            velocity: Point2 { x: 0f32, y: 0f32 },
+            is_alive: true,
+        }
+    }
+
     pub fn killed(&self) -> bool {
         !self.is_alive
     }
@@ -26,16 +36,6 @@ impl Shit {
 
     fn hit_floor(&self, frame_h: f32) -> bool {
         self.rect.y + self.rect.h > frame_h
-    }
-}
-
-impl Default for Shit {
-    fn default() -> Self {
-        Self {
-            rect: Rect::new(100f32, 200f32, BIRD_SIZE, BIRD_SIZE),
-            velocity: Point2 { x: 0f32, y: 0f32 },
-            is_alive: true,
-        }
     }
 }
 
@@ -66,7 +66,12 @@ impl EventHandler for Shit {
         let cir = MeshBuilder::new()
             .rectangle(DrawMode::fill(), self.rect, Color::new(0.5, 0.5, 0.5, 1.0))
             .build(_ctx)?;
-        ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)
+        ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)?;
+
+        let draw_param = DrawParam::new()
+            .dest([self.rect.x, self.rect.y])
+            .scale([0.06, 0.06]);
+        ggez::graphics::draw(_ctx, &self.img, draw_param)
     }
 }
 
