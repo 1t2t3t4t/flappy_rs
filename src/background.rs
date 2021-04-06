@@ -1,6 +1,6 @@
-use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
 use ggez::graphics::{DrawMode, MeshBuilder, Rect};
+use ggez::{Context, GameResult};
 
 use crate::constant::{color, EMPTY_DRAW_PARAM};
 use crate::game_state::{GameComponent, Priority};

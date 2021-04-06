@@ -1,14 +1,14 @@
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 
-use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
+use ggez::{Context, GameResult};
 
-use crate::AsAny;
 use crate::constant::world::PILLAR_WIDTH;
 use crate::pillar_container::PillarContainer;
-use crate::shit::Shit;
 use crate::score_board::ScoreBoard;
+use crate::shit::Shit;
+use crate::AsAny;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -64,7 +64,9 @@ impl GameState {
             let shit = self.find_component_mut::<Shit>().expect("Shit");
             shit.kill();
         }
+    }
 
+    fn update_score_board(&mut self) {
         let score = self.score;
         let score_board = self.find_component_mut::<ScoreBoard>().expect("Scoreboard");
         score_board.score = score;
@@ -110,8 +112,11 @@ impl EventHandler for GameState {
         for component in self.components.values_mut() {
             component.update(_ctx)?
         }
+
         self.check_shit();
         self.check_game_status();
+        self.update_score_board();
+
         Ok(())
     }
 

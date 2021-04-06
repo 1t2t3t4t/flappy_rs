@@ -5,8 +5,8 @@ use ggez::ContextBuilder;
 use crate::background::Background;
 use crate::game_state::{GameComponentContainer, GameState};
 use crate::pillar_container::PillarContainer;
-use crate::shit::Shit;
 use crate::score_board::ScoreBoard;
+use crate::shit::Shit;
 
 mod background;
 mod constant;
