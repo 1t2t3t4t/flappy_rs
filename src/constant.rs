@@ -1,4 +1,4 @@
-pub const EMPTY_DRAW_PARAM: ([f32; 2],) = ([0f32, 0f32],);
+pub const EMPTY_DRAW_PARAM: ([f32; 2], ) = ([0f32, 0f32], );
 
 pub mod color {
     use ggez::graphics::Color;

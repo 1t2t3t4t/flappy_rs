@@ -1,13 +1,13 @@
-use std::rc::{Weak, Rc};
-use crate::game_state::{GameState, GameComponent, Priority};
-use crate::pillar::Pillar;
-use ggez::event::EventHandler;
 use ggez::{Context, GameResult};
+use ggez::event::EventHandler;
+
 use crate::constant::world::BIRD_SIZE;
+use crate::game_state::{GameComponent, Priority};
+use crate::pillar::Pillar;
 
 #[derive(Default)]
 pub struct PillarContainer {
-    pillars: Vec<Pillar>
+    pillars: Vec<Pillar>,
 }
 
 impl PillarContainer {
@@ -25,9 +25,7 @@ impl PillarContainer {
     }
 
     pub fn stop_all(&mut self) {
-        self.pillars
-            .iter_mut()
-            .for_each(|x| x.stop());
+        self.pillars.iter_mut().for_each(|x| x.stop());
     }
 
     fn update_pillars(&mut self, ctx: &mut Context) {
@@ -45,7 +43,9 @@ impl PillarContainer {
     }
 
     fn clean_pillars(&mut self) {
-        self.pillars = self.pillars.iter()
+        self.pillars = self
+            .pillars
+            .iter()
             .filter(|x| !x.is_out_of_screen())
             .map(|x| x.to_owned())
             .collect();
@@ -55,15 +55,11 @@ impl PillarContainer {
 impl EventHandler for PillarContainer {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         self.update_pillars(_ctx);
-        self.pillars
-            .iter_mut()
-            .try_for_each(|x| x.update(_ctx))
+        self.pillars.iter_mut().try_for_each(|x| x.update(_ctx))
     }
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
-        self.pillars
-            .iter_mut()
-            .try_for_each(|x| x.draw(_ctx))
+        self.pillars.iter_mut().try_for_each(|x| x.draw(_ctx))
     }
 }
 

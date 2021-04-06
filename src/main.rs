@@ -11,8 +11,8 @@ mod background;
 mod constant;
 mod game_state;
 mod pillar;
-mod shit;
 mod pillar_container;
+mod shit;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;

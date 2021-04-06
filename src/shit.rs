@@ -1,12 +1,12 @@
-use ggez::event::EventHandler;
-use ggez::graphics::mint::Point2;
-use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
 use ggez::{Context, GameResult};
-
-use crate::constant::world::{BIRD_SIZE, JUMP_FORCE};
-use crate::constant::{world::GRAVITY, EMPTY_DRAW_PARAM};
-use crate::game_state::{GameComponent, Priority};
+use ggez::event::EventHandler;
+use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
+use ggez::graphics::mint::Point2;
 use ggez::input::keyboard::KeyCode;
+
+use crate::constant::{EMPTY_DRAW_PARAM, world::GRAVITY};
+use crate::constant::world::{BIRD_SIZE, JUMP_FORCE};
+use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]
 pub struct Shit {

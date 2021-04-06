@@ -1,10 +1,12 @@
-use crate::AsAny;
-use ggez::event::EventHandler;
-use ggez::{Context, GameResult};
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
+
+use ggez::{Context, GameResult};
+use ggez::event::EventHandler;
+
+use crate::AsAny;
+use crate::constant::world::PILLAR_WIDTH;
 use crate::pillar_container::PillarContainer;
-use crate::constant::world::{BIRD_SIZE, PILLAR_WIDTH};
 use crate::shit::Shit;
 
 #[derive(Eq, PartialEq)]
@@ -28,7 +30,7 @@ pub trait GameComponentContainer {
 #[derive(Default)]
 pub struct GameState {
     components: HashMap<TypeId, Box<dyn GameComponent>>,
-    score: u32
+    score: u32,
 }
 
 impl GameState {
@@ -41,14 +43,16 @@ impl GameState {
 
     fn check_shit(&mut self) {
         let shit_rect = self.find_component::<Shit>().expect("Shit").rect;
-        let container = self.find_component_mut::<PillarContainer>().expect("Container");
+        let container = self
+            .find_component_mut::<PillarContainer>()
+            .expect("Container");
         let mut should_die = false;
 
         for pillar in container.pillars_mut() {
             if pillar.collide(shit_rect) {
                 should_die = true;
                 break;
-            } else if  shit_rect.x > pillar.pos_x() + PILLAR_WIDTH && !pillar.passed {
+            } else if shit_rect.x > pillar.pos_x() + PILLAR_WIDTH && !pillar.passed {
                 pillar.passed = true;
                 self.score += 1;
                 break;
@@ -59,9 +63,13 @@ impl GameState {
             let shit = self.find_component_mut::<Shit>().expect("Shit");
             shit.kill();
         }
+    }
 
+    fn check_game_status(&mut self) {
         let killed = self.find_component::<Shit>().expect("Shit").killed();
-        let container = self.find_component_mut::<PillarContainer>().expect("Container");
+        let container = self
+            .find_component_mut::<PillarContainer>()
+            .expect("Container");
 
         if killed {
             container.stop_all();
@@ -75,7 +83,8 @@ impl GameComponentContainer for GameState {
         if self.components.contains_key(&component_type_id) {
             return;
         }
-        self.components.insert(component_type_id, Box::new(new_component));
+        self.components
+            .insert(component_type_id, Box::new(new_component));
     }
 
     fn find_component<T: 'static>(&self) -> Option<&T> {
@@ -97,6 +106,7 @@ impl EventHandler for GameState {
             component.update(_ctx)?
         }
         self.check_shit();
+        self.check_game_status();
         Ok(())
     }
 
