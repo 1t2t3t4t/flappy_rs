@@ -22,7 +22,7 @@ impl EventHandler for ScoreBoard {
             text: format!("Score: {}", self.score),
             font: Some(font),
             scale: Some(Scale::uniform(40f32)),
-            color: Some(ggez::graphics::BLACK)
+            color: Some(ggez::graphics::BLACK),
         });
         let x_pos_border = w / 2f32 - (text_border.width(_ctx) as f32 / 2f32);
         ggez::graphics::draw(_ctx, &text_border, ([x_pos_border + 2f32, 0f32 + 2f32],))?;
