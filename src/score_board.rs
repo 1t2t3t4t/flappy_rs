@@ -13,7 +13,7 @@ fn draw_shadow_text(
     ctx: &mut Context,
     text: &str,
     font: Option<Font>,
-    scale: Option<Scale>
+    scale: Option<Scale>,
 ) -> GameResult {
     let (w, _) = ggez::graphics::drawable_size(ctx);
     let text_border = Text::new(TextFragment {
@@ -30,7 +30,7 @@ fn draw_text(
     ctx: &mut Context,
     text: &str,
     font: Option<Font>,
-    scale: Option<Scale>
+    scale: Option<Scale>,
 ) -> GameResult {
     let (w, _) = ggez::graphics::drawable_size(ctx);
     let text = Text::new(TextFragment {
@@ -41,7 +41,7 @@ fn draw_text(
     });
     let x_pos = w / 2f32 - (text.width(ctx) as f32 / 2f32);
 
-    ggez::graphics::draw(ctx, &text, ([x_pos, 0f32], ))
+    ggez::graphics::draw(ctx, &text, ([x_pos, 0f32],))
 }
 
 impl EventHandler for ScoreBoard {

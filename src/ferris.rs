@@ -4,8 +4,8 @@ use ggez::graphics::{Color, DrawMode, DrawParam, Image, MeshBuilder, Rect};
 use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
 
-use crate::constant::world::{BIRD_HEIGHT, BIRD_WIDTH, JUMP_FORCE};
 use crate::constant::world::GRAVITY;
+use crate::constant::world::{BIRD_HEIGHT, BIRD_WIDTH, JUMP_FORCE};
 use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]
