@@ -1,11 +1,10 @@
 use std::any::Any;
+use std::env;
+use std::path;
 
 use ggez::ContextBuilder;
 
 use crate::game_state::GameState;
-
-use std::env;
-use std::path;
 
 mod background;
 mod constant;

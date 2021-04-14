@@ -1,6 +1,6 @@
+use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
 use ggez::graphics::{Font, Scale, Text, TextFragment};
-use ggez::{Context, GameResult};
 
 use crate::game_state::{GameComponent, Priority};
 

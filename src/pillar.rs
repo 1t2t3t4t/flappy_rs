@@ -1,11 +1,11 @@
+use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
 use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
 use ggez::nalgebra::Point2;
-use ggez::{Context, GameResult};
-use rand::{thread_rng, Rng};
+use rand::{Rng, thread_rng};
 
-use crate::constant::world::{BIRD_HEIGHT, PILLAR_WIDTH};
 use crate::constant::EMPTY_DRAW_PARAM;
+use crate::constant::world::{BIRD_HEIGHT, PILLAR_WIDTH};
 use crate::game_state::{GameComponent, Priority};
 
 fn draw_pillar_rect(_ctx: &mut Context, rect: Rect) -> GameResult {

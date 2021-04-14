@@ -1,11 +1,11 @@
-use ggez::event::EventHandler;
-use ggez::graphics::mint::Point2;
-use ggez::graphics::{DrawParam, Image, Rect};
-use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
+use ggez::event::EventHandler;
+use ggez::graphics::{DrawParam, Image, Rect};
+use ggez::graphics::mint::Point2;
+use ggez::input::keyboard::KeyCode;
 
-use crate::constant::world::GRAVITY;
 use crate::constant::world::{BIRD_HEIGHT, BIRD_WIDTH, JUMP_FORCE};
+use crate::constant::world::GRAVITY;
 use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]

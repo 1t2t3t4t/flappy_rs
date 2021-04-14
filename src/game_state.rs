@@ -1,16 +1,16 @@
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 
-use ggez::event::EventHandler;
 use ggez::{Context, GameResult};
+use ggez::event::EventHandler;
+use ggez::input::keyboard::KeyCode;
 
+use crate::AsAny;
 use crate::background::Background;
 use crate::constant::world::PILLAR_WIDTH;
 use crate::ferris::Ferris;
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
-use crate::AsAny;
-use ggez::input::keyboard::KeyCode;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
