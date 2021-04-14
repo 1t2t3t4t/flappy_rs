@@ -1,6 +1,6 @@
 use ggez::event::EventHandler;
 use ggez::graphics::mint::Point2;
-use ggez::graphics::{Color, DrawMode, DrawParam, Image, MeshBuilder, Rect};
+use ggez::graphics::{DrawParam, Image, Rect};
 use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
 
