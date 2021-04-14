@@ -1,5 +1,5 @@
 [package]
-name = "flappy_shit_rs"
+name = "flappy_rs"
 version = "0.1.0"
 authors = ["Boss <bossnathakorn@gmail.com>"]
 edition = "2018"
