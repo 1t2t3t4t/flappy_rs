@@ -5,7 +5,7 @@ use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
 
 use crate::constant::world::{BIRD_HEIGHT, BIRD_WIDTH, JUMP_FORCE};
-use crate::constant::{world::GRAVITY, EMPTY_DRAW_PARAM};
+use crate::constant::world::GRAVITY;
 use crate::game_state::{GameComponent, Priority};
 
 #[derive(Debug)]
@@ -63,11 +63,6 @@ impl EventHandler for Ferris {
     }
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
-        let cir = MeshBuilder::new()
-            .rectangle(DrawMode::fill(), self.rect, Color::new(0.5, 0.5, 0.5, 1.0))
-            .build(_ctx)?;
-        ggez::graphics::draw(_ctx, &cir, EMPTY_DRAW_PARAM)?;
-
         let draw_param = DrawParam::new()
             .dest([self.rect.x, self.rect.y])
             .offset([0.02, 0.02])
