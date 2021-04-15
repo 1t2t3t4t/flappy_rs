@@ -1,5 +1,5 @@
-use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
+use ggez::{Context, GameResult};
 
 use crate::constant::world::{BIRD_HEIGHT, PILLAR_SPEED};
 use crate::game_state::{GameComponent, Priority};

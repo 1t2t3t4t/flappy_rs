@@ -1,18 +1,18 @@
-use ggez::{Context, GameResult};
 use ggez::event::EventHandler;
-use ggez::graphics::{Image, DrawParam};
+use ggez::graphics::{DrawParam, Image};
+use ggez::{Context, GameResult};
 
-use crate::game_state::{GameComponent, Priority};
 use crate::constant::world::SKY_SPEED;
-use ggez::graphics::spritebatch::SpriteBatch;
 use crate::constant::EMPTY_DRAW_PARAM;
+use crate::game_state::{GameComponent, Priority};
+use ggez::graphics::spritebatch::SpriteBatch;
 
 #[derive(Debug)]
 pub struct Background {
     sky_sprite: SpriteBatch,
     sky_img: Image,
     offset: f32,
-    play: bool
+    play: bool,
 }
 
 impl Background {
@@ -22,7 +22,7 @@ impl Background {
             sky_sprite: SpriteBatch::new(sky_img.clone()),
             sky_img,
             offset: 0f32,
-            play: true
+            play: true,
         }
     }
 
@@ -33,11 +33,15 @@ impl Background {
 
 impl EventHandler for Background {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
-        if !self.play { return Ok(()) }
+        if !self.play {
+            return Ok(());
+        }
 
         let delta_time = ggez::timer::delta(_ctx).as_secs_f32();
         self.offset += SKY_SPEED * delta_time;
-        if self.offset >= 1f32 { self.offset = 0f32 }
+        if self.offset >= 1f32 {
+            self.offset = 0f32
+        }
         Ok(())
     }
 
