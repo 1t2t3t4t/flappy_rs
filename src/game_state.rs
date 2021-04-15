@@ -39,7 +39,7 @@ pub struct GameState {
 
 impl GameState {
     pub fn set_up(&mut self, ctx: &mut Context) {
-        self.add_component(Background);
+        self.add_component(Background::new(ctx));
         self.add_component(Ferris::new(ctx));
         self.add_component(PillarContainer::default());
         self.add_component(ScoreBoard::default());
@@ -96,6 +96,9 @@ impl GameState {
 
         if killed {
             container.stop_all();
+            self.find_component_mut::<Background>()
+                .expect("Bg")
+                .stop();
         }
     }
 }
