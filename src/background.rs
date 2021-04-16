@@ -46,6 +46,8 @@ impl EventHandler for Background {
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
+        self.sky_sprite.clear();
+        
         let first_sky = DrawParam::new()
             .dest([0f32, 0f32])
             .offset([self.offset, 0f32]);
