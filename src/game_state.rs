@@ -11,6 +11,7 @@ use crate::ferris::Ferris;
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
 use crate::AsAny;
+use crate::fps_counter::FpsCounter;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -43,6 +44,7 @@ impl GameState {
         self.add_component(Ferris::new(ctx));
         self.add_component(PillarContainer::default());
         self.add_component(ScoreBoard::default());
+        self.add_component(FpsCounter);
     }
 
     fn restart_game(&mut self, ctx: &mut Context) {

@@ -13,6 +13,7 @@ mod game_state;
 mod pillar;
 mod pillar_container;
 mod score_board;
+mod fps_counter;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;
