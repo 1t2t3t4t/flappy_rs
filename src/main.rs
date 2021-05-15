@@ -9,11 +9,12 @@ use crate::game_state::GameState;
 mod background;
 mod constant;
 mod ferris;
+mod fps_counter;
 mod game_state;
 mod pillar;
 mod pillar_container;
+mod save_system;
 mod score_board;
-mod fps_counter;
 
 pub trait AsAny {
     fn as_any(&self) -> &dyn Any;

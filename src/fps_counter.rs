@@ -1,7 +1,7 @@
 use crate::game_state::{GameComponent, Priority};
 use ggez::event::EventHandler;
-use ggez::{Context, GameResult};
 use ggez::graphics::{Font, Scale, Text, TextFragment};
+use ggez::{Context, GameResult};
 
 pub struct FpsCounter;
 
@@ -21,10 +21,10 @@ impl EventHandler for FpsCounter {
             text,
             font,
             scale,
-            color: Some(ggez::graphics::BLACK)
+            color: Some(ggez::graphics::BLACK),
         });
         let y_pos = h - text.height(_ctx) as f32 - 10 as f32;
-        ggez::graphics::draw(_ctx, &text, ([10f32, y_pos], ))
+        ggez::graphics::draw(_ctx, &text, ([10f32, y_pos],))
     }
 }
 
@@ -33,5 +33,3 @@ impl GameComponent for FpsCounter {
         Priority::High
     }
 }
-
-

@@ -4,14 +4,15 @@ use std::collections::HashMap;
 use ggez::event::EventHandler;
 use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
+use json_db_rs::JsonDatabase;
 
-use crate::background::Background;
+use crate::{background::Background, save_system::{Save, SaveSystem}};
 use crate::constant::world::PILLAR_WIDTH;
 use crate::ferris::Ferris;
+use crate::fps_counter::FpsCounter;
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
 use crate::AsAny;
-use crate::fps_counter::FpsCounter;
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -36,6 +37,7 @@ pub trait GameComponentContainer {
 pub struct GameState {
     components: HashMap<TypeId, Box<dyn GameComponent>>,
     score: u32,
+    save_system: SaveSystem<JsonDatabase>
 }
 
 impl GameState {
@@ -51,6 +53,20 @@ impl GameState {
         self.score = 0;
         self.components.clear();
         self.set_up(ctx);
+    }
+
+    fn end_game(&mut self) {
+        if let Some(save) = self.save_system.load_save() {
+            if self.score > save.highest_score {
+                self.save_system.save(Save {
+                    highest_score: self.score
+                })
+            }
+        } else {
+            self.save_system.save(Save {
+                highest_score: self.score
+            })
+        }
     }
 
     fn draw_by_priority(&mut self, _ctx: &mut Context, priority: Priority) -> GameResult {
@@ -99,6 +115,7 @@ impl GameState {
         if killed {
             container.stop_all();
             self.find_component_mut::<Background>().expect("Bg").stop();
+            self.end_game();
         }
     }
 }
