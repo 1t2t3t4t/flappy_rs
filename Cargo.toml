@@ -10,4 +10,4 @@ edition = "2018"
 ggez = "0.5.1"
 rand = "0.8.3"
 serde = { version = "1.0.126", features = ["derive"] }
-json_db_rs = { git = "https://github.com/1t2t3t4t/json_db_rs" }
+json_db_rs = { git = "https://github.com/1t2t3t4t/json_db_rs", version = "0.1.2" }

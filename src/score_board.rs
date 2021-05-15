@@ -7,6 +7,7 @@ use crate::game_state::{GameComponent, Priority};
 #[derive(Default)]
 pub struct ScoreBoard {
     pub score: u32,
+    pub highest_score: u32
 }
 
 fn draw_shadow_text(
@@ -44,13 +45,23 @@ fn draw_text(
     ggez::graphics::draw(ctx, &text, ([x_pos, 0f32],))
 }
 
+impl ScoreBoard {
+    fn score_text(&self) -> String {
+        if self.highest_score > 0 {
+            format!("Score: {}. Highscore: {}", self.score, self.highest_score)
+        } else {
+            format!("Score: {}", self.score)
+        }
+    }
+}
+
 impl EventHandler for ScoreBoard {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         Ok(())
     }
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
-        let text = format!("Score: {}", self.score);
+        let text = self.score_text();
         let font = Some(Font::default());
         let scale = Some(Scale::uniform(40f32));
 

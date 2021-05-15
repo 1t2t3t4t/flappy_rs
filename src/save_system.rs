@@ -16,7 +16,7 @@ where
 impl Default for SaveSystem<JsonDatabase> {
     fn default() -> Self {
         Self {
-            database: JsonDatabase::default()
+            database: JsonDatabase::default(),
         }
     }
 }
@@ -26,12 +26,7 @@ where
     DB: Database,
 {
     pub fn load_save(&self) -> Option<Save> {
-        let save = self.database.get_all::<Save>();
-        if save.len() == 1 {
-            save.first().and_then(|x| Some(x.clone()))
-        } else {
-            None
-        }
+        self.database.get_one::<Save>()
     }
 
     pub fn save(&self, save: Save) {

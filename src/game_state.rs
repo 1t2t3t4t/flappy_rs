@@ -6,13 +6,16 @@ use ggez::input::keyboard::KeyCode;
 use ggez::{Context, GameResult};
 use json_db_rs::JsonDatabase;
 
-use crate::{background::Background, save_system::{Save, SaveSystem}};
 use crate::constant::world::PILLAR_WIDTH;
 use crate::ferris::Ferris;
 use crate::fps_counter::FpsCounter;
 use crate::pillar_container::PillarContainer;
 use crate::score_board::ScoreBoard;
 use crate::AsAny;
+use crate::{
+    background::Background,
+    save_system::{Save, SaveSystem},
+};
 
 #[derive(Eq, PartialEq)]
 pub enum Priority {
@@ -37,7 +40,7 @@ pub trait GameComponentContainer {
 pub struct GameState {
     components: HashMap<TypeId, Box<dyn GameComponent>>,
     score: u32,
-    save_system: SaveSystem<JsonDatabase>
+    save_system: SaveSystem<JsonDatabase>,
 }
 
 impl GameState {
@@ -47,6 +50,15 @@ impl GameState {
         self.add_component(PillarContainer::default());
         self.add_component(ScoreBoard::default());
         self.add_component(FpsCounter);
+
+        self.restore_save();
+    }
+
+    fn restore_save(&mut self) {
+        if let Some(save) = self.save_system.load_save() {
+            let score_board = self.find_component_mut::<ScoreBoard>();
+            score_board.unwrap().highest_score = save.highest_score;
+        }
     }
 
     fn restart_game(&mut self, ctx: &mut Context) {
@@ -59,12 +71,12 @@ impl GameState {
         if let Some(save) = self.save_system.load_save() {
             if self.score > save.highest_score {
                 self.save_system.save(Save {
-                    highest_score: self.score
+                    highest_score: self.score,
                 })
             }
         } else {
             self.save_system.save(Save {
-                highest_score: self.score
+                highest_score: self.score,
             })
         }
     }
