@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 use ggez::event::EventHandler;
 use ggez::input::keyboard::KeyCode;
-use ggez::{Context, GameResult};
+use ggez::{Context, GameError, GameResult};
 use json_db_rs::JsonDatabase;
 
 use crate::constant::world::PILLAR_WIDTH;
@@ -25,7 +25,7 @@ pub enum Priority {
     High,
 }
 
-pub trait GameComponent: EventHandler + AsAny {
+pub trait GameComponent: EventHandler<GameError> + AsAny {
     fn priority(&self) -> Priority;
 }
 
@@ -155,7 +155,7 @@ impl GameComponentContainer for GameState {
     }
 }
 
-impl EventHandler for GameState {
+impl EventHandler<GameError> for GameState {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         for component in self.components.values_mut() {
             component.update(_ctx)?
@@ -175,7 +175,7 @@ impl EventHandler for GameState {
     }
 
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
-        ggez::graphics::clear(_ctx, ggez::graphics::BLACK);
+        ggez::graphics::clear(_ctx, ggez::graphics::Color::BLACK);
 
         self.draw_by_priority(_ctx, Priority::None)?;
         self.draw_by_priority(_ctx, Priority::Low)?;

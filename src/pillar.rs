@@ -1,7 +1,7 @@
 use ggez::event::EventHandler;
 use ggez::graphics::{Color, DrawMode, MeshBuilder, Rect};
-use ggez::nalgebra::Point2;
-use ggez::{Context, GameResult};
+use ggez::mint::Point2;
+use ggez::{Context, GameError, GameResult};
 use rand::{thread_rng, Rng};
 
 use crate::constant::world::{BIRD_HEIGHT, PILLAR_WIDTH};
@@ -11,7 +11,9 @@ use crate::game_state::{GameComponent, Priority};
 fn draw_pillar_rect(_ctx: &mut Context, rect: Rect) -> GameResult {
     let pillar = MeshBuilder::new()
         .rectangle(DrawMode::fill(), rect, Color::new(0.5, 0.5, 0.5, 1.0))
-        .build(_ctx)?;
+        .unwrap()
+        .build(_ctx)
+        .unwrap();
     ggez::graphics::draw(_ctx, &pillar, EMPTY_DRAW_PARAM)
 }
 
@@ -59,7 +61,7 @@ impl Pillar {
     }
 }
 
-impl EventHandler for Pillar {
+impl EventHandler<GameError> for Pillar {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         let delta = ggez::timer::delta(_ctx).as_secs_f32();
         self.upper_rect.x -= self.velocity.x * delta;

@@ -39,7 +39,7 @@ fn main() {
         path::PathBuf::from("./resources")
     };
 
-    let (mut ctx, mut event_loop) = ContextBuilder::new("flappy_shit", "Boss")
+    let (mut ctx, event_loop) = ContextBuilder::new("flappy_shit", "Boss")
         .add_resource_path(resource_dir)
         .build()
         .expect("Buildable");
@@ -47,5 +47,5 @@ fn main() {
     let mut game_state = GameState::default();
     game_state.set_up(&mut ctx);
 
-    ggez::event::run(&mut ctx, &mut event_loop, &mut game_state).unwrap();
+    ggez::event::run(ctx, event_loop, game_state);
 }
