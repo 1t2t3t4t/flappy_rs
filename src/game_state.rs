@@ -29,6 +29,15 @@ pub trait GameComponent: EventHandler + AsAny {
     fn priority(&self) -> Priority;
 }
 
+impl<T: GameComponent + Any> AsAny for T {
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
+    }
+}
+
 pub trait GameComponentContainer {
     fn add_component(&mut self, new_component: impl GameComponent + 'static);
 

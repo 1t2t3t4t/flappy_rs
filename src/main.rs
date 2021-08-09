@@ -21,15 +21,6 @@ pub trait AsAny {
     fn as_any_mut(&mut self) -> &mut dyn Any;
 }
 
-impl<T: Any> AsAny for T {
-    fn as_any(&self) -> &dyn Any {
-        self
-    }
-    fn as_any_mut(&mut self) -> &mut dyn Any {
-        self
-    }
-}
-
 fn main() {
     let resource_dir = if let Ok(manifest_dir) = env::var("CARGO_MANIFEST_DIR") {
         let mut path = path::PathBuf::from(manifest_dir);
