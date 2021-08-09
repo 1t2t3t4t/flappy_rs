@@ -1,5 +1,5 @@
 use ggez::event::EventHandler;
-use ggez::{Context, GameResult};
+use ggez::{Context, GameError, GameResult};
 
 use crate::constant::world::{BIRD_HEIGHT, PILLAR_SPEED};
 use crate::game_state::{GameComponent, Priority};
@@ -53,7 +53,7 @@ impl PillarContainer {
     }
 }
 
-impl EventHandler for PillarContainer {
+impl EventHandler<GameError> for PillarContainer {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         self.update_pillars(_ctx);
         self.pillars.iter_mut().try_for_each(|x| x.update(_ctx))

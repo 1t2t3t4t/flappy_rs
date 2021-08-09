@@ -1,6 +1,6 @@
 use ggez::event::EventHandler;
-use ggez::graphics::{Font, Scale, Text, TextFragment};
-use ggez::{Context, GameResult};
+use ggez::graphics::{Font, PxScale, Text, TextFragment};
+use ggez::{Context, GameError, GameResult};
 
 use crate::game_state::{GameComponent, Priority};
 
@@ -14,14 +14,14 @@ fn draw_shadow_text(
     ctx: &mut Context,
     text: &str,
     font: Option<Font>,
-    scale: Option<Scale>,
+    scale: Option<PxScale>,
 ) -> GameResult {
     let (w, _) = ggez::graphics::drawable_size(ctx);
     let text_border = Text::new(TextFragment {
         text: text.to_string(),
         font,
         scale,
-        color: Some(ggez::graphics::BLACK),
+        color: Some(ggez::graphics::Color::BLACK),
     });
     let x_pos_border = w / 2f32 - (text_border.width(ctx) as f32 / 2f32);
     ggez::graphics::draw(ctx, &text_border, ([x_pos_border + 2f32, 0f32 + 2f32],))
@@ -31,7 +31,7 @@ fn draw_text(
     ctx: &mut Context,
     text: &str,
     font: Option<Font>,
-    scale: Option<Scale>,
+    scale: Option<PxScale>,
 ) -> GameResult {
     let (w, _) = ggez::graphics::drawable_size(ctx);
     let text = Text::new(TextFragment {
@@ -55,7 +55,7 @@ impl ScoreBoard {
     }
 }
 
-impl EventHandler for ScoreBoard {
+impl EventHandler<GameError> for ScoreBoard {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         Ok(())
     }
@@ -63,7 +63,7 @@ impl EventHandler for ScoreBoard {
     fn draw(&mut self, _ctx: &mut Context) -> GameResult {
         let text = self.score_text();
         let font = Some(Font::default());
-        let scale = Some(Scale::uniform(40f32));
+        let scale = Some(PxScale::from(40f32));
 
         draw_shadow_text(_ctx, &text, font, scale)?;
         draw_text(_ctx, &text, font, scale)

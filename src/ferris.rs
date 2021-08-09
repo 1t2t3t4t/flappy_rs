@@ -2,7 +2,7 @@ use ggez::event::EventHandler;
 use ggez::graphics::mint::Point2;
 use ggez::graphics::{DrawParam, Image, Rect};
 use ggez::input::keyboard::KeyCode;
-use ggez::{Context, GameResult};
+use ggez::{Context, GameError, GameResult};
 
 use crate::constant::world::GRAVITY;
 use crate::constant::world::{BIRD_HEIGHT, BIRD_WIDTH, JUMP_FORCE};
@@ -39,7 +39,7 @@ impl Ferris {
     }
 }
 
-impl EventHandler for Ferris {
+impl EventHandler<GameError> for Ferris {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         let delta = ggez::timer::delta(_ctx).as_secs_f32();
         let (_, h) = ggez::graphics::drawable_size(_ctx);

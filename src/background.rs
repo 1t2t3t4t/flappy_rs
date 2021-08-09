@@ -1,6 +1,6 @@
 use ggez::event::EventHandler;
 use ggez::graphics::{DrawParam, Image};
-use ggez::{Context, GameResult};
+use ggez::{Context, GameError, GameResult};
 
 use crate::constant::world::SKY_SPEED;
 use crate::constant::EMPTY_DRAW_PARAM;
@@ -31,7 +31,7 @@ impl Background {
     }
 }
 
-impl EventHandler for Background {
+impl EventHandler<GameError> for Background {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         if !self.play {
             return Ok(());
