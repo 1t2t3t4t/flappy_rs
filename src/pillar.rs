@@ -17,7 +17,7 @@ fn draw_pillar_rect(_ctx: &mut Context, rect: Rect) -> GameResult {
     ggez::graphics::draw(_ctx, &pillar, EMPTY_DRAW_PARAM)
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Pillar {
     upper_rect: Rect,
     lower_rect: Rect,

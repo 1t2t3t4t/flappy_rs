@@ -1,7 +1,7 @@
 use json_db_rs::{Database, JsonDatabase};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Save {
     pub highest_score: u32,
 }

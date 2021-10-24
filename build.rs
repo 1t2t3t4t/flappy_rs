@@ -8,9 +8,17 @@ fn copy_res_dir(target_path: String) {
         if let Ok(entry) = file {
             let path = format!("./{}/resources", target_path);
             fs::create_dir_all(&path).unwrap();
-            fs::copy(entry.path(), format!("./{}/resources/{}", target_path, entry.file_name().to_str().unwrap())).unwrap();
+            fs::copy(
+                entry.path(),
+                format!(
+                    "./{}/resources/{}",
+                    target_path,
+                    entry.file_name().to_str().unwrap()
+                ),
+            )
+            .unwrap();
         }
-    } 
+    }
 }
 
 fn main() {

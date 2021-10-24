@@ -77,16 +77,15 @@ impl GameState {
     }
 
     fn end_game(&mut self) {
+        let new_save = Save {
+            highest_score: self.score,
+        };
         if let Some(save) = self.save_system.load_save() {
             if self.score > save.highest_score {
-                self.save_system.save(Save {
-                    highest_score: self.score,
-                })
+                self.save_system.save(new_save)
             }
         } else {
-            self.save_system.save(Save {
-                highest_score: self.score,
-            })
+            self.save_system.save(new_save)
         }
     }
 

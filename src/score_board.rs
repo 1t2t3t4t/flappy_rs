@@ -7,7 +7,7 @@ use crate::game_state::{GameComponent, Priority};
 #[derive(Default)]
 pub struct ScoreBoard {
     pub score: u32,
-    pub highest_score: u32
+    pub highest_score: u32,
 }
 
 fn draw_shadow_text(
