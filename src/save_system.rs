@@ -26,10 +26,10 @@ where
     DB: Database,
 {
     pub fn load_save(&self) -> Option<Save> {
-        self.database.get_one::<Save>()
+        self.database.get_one::<Save>().unwrap()
     }
 
     pub fn save(&self, save: Save) {
-        self.database.save(save);
+        self.database.save(save).unwrap();
     }
 }
