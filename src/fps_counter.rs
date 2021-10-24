@@ -23,7 +23,7 @@ impl EventHandler<GameError> for FpsCounter {
             scale,
             color: Some(ggez::graphics::Color::BLACK),
         });
-        let y_pos = h - text.height(_ctx) as f32 - 10 as f32;
+        let y_pos = h - text.height(_ctx) as f32 - 10_f32;
         ggez::graphics::draw(_ctx, &text, ([10f32, y_pos],))
     }
 }
